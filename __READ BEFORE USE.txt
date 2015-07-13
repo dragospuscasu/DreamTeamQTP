@@ -1,0 +1,4 @@
+This Framework is Property of ENDAVA
+Before trying to use this framework in any commercial project please contact:
+beniamin.clim@endava.com
+igor.cernopolc@endava.com

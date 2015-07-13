@@ -1,0 +1,141 @@
+<project name="Execute Selenium Tests" default="regression-pack">
+
+	<tstamp>
+	      <format property="Date" pattern="dd_MMM_yyyy_hh_mm_ss"/>
+	</tstamp>
+	
+	<property file="build.properties"/>
+	
+	<path id="main.classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar"/>
+		<!--<pathelement location="${classes}" /> -->
+	</path>
+	
+	<path id="test.classpath.compile">
+		<pathelement location="${main.classes.dir}"/>
+		<path refid="main.classpath" />
+	</path>	
+	<path id="test.classpath.run">
+		<pathelement location="${test.classes.dir}"/>
+		<path refid="test.classpath.compile" />
+	</path>	
+	
+	<target name="clean">
+		<delete dir="${test.reports.dir}"/>
+		<delete dir="${build.dir}"/>
+	</target>
+	
+    <target name="setup" depends="clean">			
+		<mkdir dir="${build.dir}"/>
+	    <mkdir dir="${main.classes.dir}"/>
+		<mkdir dir="${test.classes.dir}"/>		
+		<mkdir dir="${test.reports.dir}"/>
+	</target>
+	
+	<target name="compile-framework" depends="setup" description="Compiles the test source code into the appropriate build directories">
+		<echo message="Compile framework"/>
+		<javac srcdir="${main.src.dir}" destdir="${main.classes.dir}" includeAntRuntime="false" debug="true" debuglevel="vars,lines,source" nowarn="true">
+			
+			<classpath>
+				<path refid="main.classpath" />
+			</classpath>
+		</javac>		
+		<copy file="${main.resources.dir}/com/endava/messages.properties" tofile="${main.classes.dir}/com/endava/messages.properties"/>
+		<copy file="${main.resources.dir}/com/endava/model.properties" tofile="${main.classes.dir}/com/endava/model.properties"/>
+	</target>
+	
+	<target name="compile-tests" depends="compile-framework" description="Compiles the test source code into the appropriate build directories">	
+		<echo message="Compile tests"/>
+		<javac srcdir="${test.src.dir}" destdir="${test.classes.dir}" includeAntRuntime="false" debug="true" debuglevel="vars,lines,source" nowarn="true">		
+			<classpath>
+				<path refid="test.classpath.compile" />
+			</classpath>
+		</javac>
+		<copy file="${test.resources.dir}/automation.properties" tofile="${test.classes.dir}/automation.properties"/>
+		<copy file="${test.resources.dir}/db.properties" tofile="${test.classes.dir}/db.properties"/>
+		<copy file="${test.resources.dir}/log4j.properties" tofile="${test.classes.dir}/log4j.properties"/>
+	</target>
+	
+	<!-- Uncomment the following section if Grid in needed -->
+	<!--<target name="start-selenium-server" description="starts selenium server">
+		<echo>Starting selenium server</echo>
+		<java jar="${test-src}/resources/jars/selenium-server-standalone-2.0rc2.jar" fork="true" spawn="true" classpathref="classpath">
+			<arg line="-singleWindow"/>
+		</java>	
+		<echo>Started selenium server</echo>
+	</target>
+
+	<target name="stop-selenium-server">
+		<get src="http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer" dest="${test-reports-html}/selenium-server.log" ignoreerrors="true" />
+		<echo message="Shutdown initiated" />
+	</target>-->
+
+	<target name="WebDriver-testsNG-run" depends="compile-tests" description="Running tests" >
+		<echo>Running Tests...</echo>
+		<taskdef resource="testngtasks" classpathref="main.classpath"/>
+		<testng outputDir="${ngreports}/test/output"
+				haltonfailure="false"
+				useDefaultListeners="true"
+				classpathref ="classpath">
+			<xmlfileset dir="${root-dir}" includes="testng.xml" />
+		</testng>	
+		<antcall target="WebDriver-testsNG-reports"/>
+	</target>
+	
+	<target name="WebDriver-testsNG-reports">
+	    <echo>Generating reports...</echo>
+        <delete dir="${ngreports}/reports"/>
+        <mkdir dir="${ngreports}/reports"/>
+        <xslt in="${ngreports}/test/output/testng-results.xml" style="${ngreports}/testng-results.xsl" out="${ngreports}/reports/index.html">
+            <param expression="${basedir}/NGReporting/reports" name="testNgXslt.outputDir" />
+ 
+            <param expression="true" name="testNgXslt.sortTestCaseLinks" />
+ 
+            <param expression="FAIL,SKIP,PASS,CONF,BY_CLASS" name="testNgXslt.testDetailsFilter" />
+ 
+            <param expression="true" name="testNgXslt.showRuntimeTotals" />
+ 
+            <classpath refid="classpath">
+            </classpath>
+        </xslt>
+    </target>
+	
+	<target name="selenium-tests-run" depends="compile-tests" description="Runs all selenium tests">
+		<junit fork="no" printsummary="yes" failureproperty="junit.failure" showoutput="true">
+			<classpath refid="test.classpath.run"/>
+			<formatter type="xml"/>
+			<batchtest todir="${test.reports.xml.dir}">
+				<fileset dir="${test.classes.dir}">
+					<include name="**/Test*.class" />
+					<include name="**/*Test.class"/>
+					<include name="**/*TestCase.class"/> 
+				</fileset>
+			</batchtest>
+		</junit>
+		
+	<!-- to run different tests in parallel using grid, uncomment the following section and set a different TestSuite. This is an example with two grid nodes. If you need more nodes, please multiply the junit section.-->	
+		
+		<!--<junit fork="yes" printsummary="yes" failureproperty="junit.failure" showoutput="false">
+			<classpath refid="classpath.test"/>
+			<formatter type="xml"/>
+			<batchtest todir="${test-reports-xml}">
+				<fileset dir="${classes}">
+					<include name="${sources}/*BogTestRegressionTestSuite*"/>
+					<exclude name="${sources}/*TestCase*"/>
+				</fileset>
+				</batchtest>
+		</junit>-->
+
+		<junitreport>
+			<fileset dir="${test.reports.xml.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report todir="${test.reports.html.dir}" />
+		</junitreport>
+	</target>
+
+	<target name="regression-pack">
+		<antcall target="selenium-tests-run"/>
+		<!--<antcall target="stop-selenium-server"/>-->
+	</target>
+</project>

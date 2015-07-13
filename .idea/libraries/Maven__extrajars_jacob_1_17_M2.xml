@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: extrajars:jacob:1.17-M2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/extrajars/jacob/1.17-M2/jacob-1.17-M2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/extrajars/jacob/1.17-M2/jacob-1.17-M2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/extrajars/jacob/1.17-M2/jacob-1.17-M2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
