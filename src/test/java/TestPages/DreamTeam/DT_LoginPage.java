@@ -21,7 +21,8 @@ public class DT_LoginPage extends Page {
     public final Element logoutButton   = new Element("logout-button");
     public final Element menuButton     = new Element("menu-button");
 
-    public DT_LoginPage() throws InterruptedException {
+
+    public DT_LoginPage(){
         open(url);
         loginForm.wait.toBeVisible(5);
     }

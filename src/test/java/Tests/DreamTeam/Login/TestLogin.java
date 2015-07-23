@@ -9,7 +9,6 @@ import org.junit.Test;
  * Created by aracautanu on 7/13/2015.
  */
 public class TestLogin extends Base {
-    Page GenericPage = new Page();
 
     @Test
     public void testLoginFieldsAreVisible() throws InterruptedException {
