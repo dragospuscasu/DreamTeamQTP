@@ -1,0 +1,10 @@
+24 Jul 2015 10:04:11:853; _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+24 Jul 2015 10:04:11:994; Running Tests on EN60618
+24 Jul 2015 10:04:11:995; Browser Type: *firefox
+24 Jul 2015 10:04:30:992; _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+24 Jul 2015 10:04:30:994; -> New test started:  Tests.DreamTeam.Login.TestLogin;null;Description file not found!
+24 Jul 2015 10:04:31:655; Command executed:  open(http://192.168.210.14:8080/dream_cms_app/) in 644ms / 0.644s 
+24 Jul 2015 10:04:37:029; Timed out waiting for '//*[@id="light"]/div/form' to become visible
+24 Jul 2015 10:04:37:030; $$$ Test ended: ;null
+24 Jul 2015 10:04:37:031; Verifications done:    Passed: 0    Failed: 0
+24 Jul 2015 10:04:37:031; Test  null  PASSED
