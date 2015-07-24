@@ -1,7 +1,7 @@
-package TestSuites.DreamTeam;
+package TestSuites;
 
 
-import Tests.DreamTeam.Login.TestLogin;
+import Tests.Login.TestLogin;
 import junit.framework.TestSuite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

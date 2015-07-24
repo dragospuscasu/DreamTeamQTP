@@ -1,16 +1,19 @@
-package TestSuites.DreamTeam;
+package TestSuites;
 
-import Tests.DreamTeam.Login.TestLogin_Smoke;
+import Tests.Login.TestLogin_Sanity;
 import junit.framework.TestSuite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        TestLogin_Smoke.class})
+        TestLogin_Sanity.class})
 
-public class TestSuite_Smoke {
+public class TestSuite_Sanity {
     public static TestSuite suite() {
-        return new TestSuite("TestSuiteSmoke");
+        return new TestSuite("TestSuiteSanity");
     }
 }
+
+
+

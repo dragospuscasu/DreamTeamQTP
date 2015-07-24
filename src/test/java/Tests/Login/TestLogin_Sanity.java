@@ -1,4 +1,4 @@
-package Tests.DreamTeam.Login;
+package Tests.Login;
 
 import core.TestVee2.Base;
 

@@ -1,21 +1,21 @@
-package TestPages.DreamTeam;
+package TestPages;
 
 import core.TestVee2.Element;
 
 /**
  * Created by aracautanu on 7/23/2015.
  */
-public class DT_HomePage extends DT_GenericPage {
+public class HomePage extends GenericPage {
 
     public Element goToUsers = new Element("link=users");
     public Element goToCourses = new Element("link=courses");
 
-    public DT_HomePage(String username, String password) {
+    public HomePage(String username, String password) {
         super(username, password);
         menu_buttonLeft.wait.toBeVisible(10);
     }
 
-    public DT_HomePage(){
+    public HomePage(){
         open(URL);
         menu_buttonLeft.wait.toBeVisible(10);
     }
