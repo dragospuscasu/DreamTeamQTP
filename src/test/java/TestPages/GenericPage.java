@@ -11,8 +11,9 @@ public class GenericPage extends Page {
         public String URL = "";
         public Element header = new Element("classname=header-container");
         public Element footer = new Element("classname=footer");
-        public Element menu_buttonLeft = new Element("menu_button_left");
-        public Element menu_buttonRight = new Element("menu_button_right");
+        public Element menu_buttonLeft = new Element("menu-button-left");
+        public Element menu_buttonRight = new Element("menu-button-right");
+        public Element goToUsersPage_button = new Element("link=Users");
 
         public GenericPage(){}
 
